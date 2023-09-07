@@ -35,11 +35,12 @@ if not(SCAN_DELAY / len(SITES) >= 60):
 APIs: List[StackAPI] = [StackAPI(site, key=getenv("API_KEY")) for site in SITES]
 
 # set up chat
-chat_client: Client = Client(getenv("CHAT_EMAIL"), getenv("CHAT_PASSWORD"))
+chat_client: Client = Client("stackexchange.com")
+
 chat_room: rooms.Room = chat_client.get_room(getenv("CHAT_ROOM_ID"))
 
 chat_room.send_message("[Same Problem Bot] Bot started.")
-
+chat_client.login(getenv("CHAT_EMAIL"), getenv("CHAT_PASSWORD"))
 
 def truncate_string(text: str, length: int) -> str:
     """
